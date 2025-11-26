@@ -24,7 +24,18 @@ export default function Command() {
       return;
     }
 
-    const wrapped = rewrapText(values.text, width);
+    const clipboardContent = await Clipboard.readText();
+
+    if (!clipboardContent) {
+      await showToast({
+        style: Toast.Style.Failure,
+        title: "No text in clipboard",
+        message: "Please copy some text first",
+      });
+      return;
+    }
+
+    const wrapped = rewrapText(clipboardContent, width);
     setRewrappedText(wrapped);
 
     if (values.copyResultToClipboard) {
@@ -44,8 +55,11 @@ export default function Command() {
   }
 
   return (
-    <Form actions={<RewrapActions onSubmit={handleSubmit} rewrappedText={rewrappedText} />}>
-      <Form.TextArea id="text" title="Text" placeholder="Enter text to rewrap..." />
+    <Form
+      actions={
+        <RewrapActions onSubmit={handleSubmit} rewrappedText={rewrappedText} />
+      }
+    >
       <Form.TextField id="width" title="Width" placeholder="80" defaultValue="80" />
       <Form.Checkbox id="copyResultToClipboard" label="Copy result to Clipboard?" defaultValue={true} />
       {rewrappedText && <Form.Description title="Rewrapped Text" text={rewrappedText} />}

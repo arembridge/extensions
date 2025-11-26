@@ -16,6 +16,12 @@
       "title": "Rewrap Text Form",
       "description": "Rewraps Text provided in the form at the chosen width",
       "mode": "view"
+    },
+    {
+      "name": "rewrap-text-clipboard",
+      "title": "Rewrap Text Clipboard",
+      "description": "Rewrap text from clipboard at the chosen width",
+      "mode": "view"
     }
   ],
   "dependencies": {
